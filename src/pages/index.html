@@ -7,8 +7,13 @@
   <p class="occhiello">Casa editrice · Ferrara · dal 2013</p>
   <h1>Libri di ricerca, curati e rilegati a Ferrara</h1>
   <p class="apertura__sotto">Pedagogia, scienze dell'educazione e manuali universitari, con comitati scientifici e autori in Italia, Spagna e America Latina. Ogni libro è curato, stampato e rilegato nella nostra legatoria.</p>
+  <form class="cerca-home" action="libri.html" role="search">
+    <label for="q" class="visivo-nascosto">Cerchi un libro</label>
+    <input type="search" id="q" name="q" placeholder="Titolo, autore, ISBN o argomento">
+    <button type="submit" class="bottone">Cerca</button>
+  </form>
   <div class="azioni">
-    <a class="bottone" href="libri.html">Sfogli i libri</a>
+    <a class="bottone bottone--chiaro" href="libri.html">Sfogli i libri</a>
     <a class="bottone bottone--chiaro" href="pubblica.html">Pubblichi con noi</a>
   </div>
   <ul class="fatti">
@@ -30,7 +35,7 @@
   <h2>Le collane</h2>
   <ul class="collane">
   {% for c in dati.collane %}
-    <li style="--h: {{ c.tinta }}"><a class="collegamento" href="libri.html?collana={{ c.slug }}">{{ c.nome }}</a>{% if c.direzione %}<p>Direzione: {{ c.direzione }} · {{ c.libri|length }} libri</p>{% else %}<p>{{ c.libri|length }} libri</p>{% endif %}</li>
+    <li style="--h: {{ c.tinta }}"><a class="collegamento" href="collane/{{ c.slug }}.html">{{ c.nome }}</a>{% if c.direzione %}<p>Direzione: {{ c.direzione }} · {{ c.libri|length }} libri</p>{% else %}<p>{{ c.libri|length }} libri</p>{% endif %}</li>
   {% endfor %}
   </ul>
 </section>

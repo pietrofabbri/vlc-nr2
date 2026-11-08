@@ -107,6 +107,7 @@ def main() -> None:
     env.filters["euro"] = euro
     env.filters["url"] = lambda s: quote(s, safe="")
     env.globals["rivela"] = lambda tipo, etichetta="", oggetto="", testo="", classe="rivela": rivela(bottega, tipo, etichetta, oggetto, testo, classe)
+    env.globals["cifrato"] = offusca(bottega["email"])  # per i moduli che preparano l'email (richiesta.js)
     contesto = {"dati": dati, "staging": not a.produzione}
 
     n = 0
@@ -117,13 +118,20 @@ def main() -> None:
     (DIST / "libri").mkdir()
     scheda = env.get_template("libro.html")
     for b in libri:
-        html = scheda.render(pagina="libro", radice="../", libro=b, **contesto)
+        altri = [x for x in (b["collana"]["libri"] if b["collana"] else []) if x is not b][:4]
+        html = scheda.render(pagina="libro", radice="../", libro=b, altri=altri, **contesto)
         (DIST / "libri" / f"{b['isbn']}.html").write_text(html, encoding="utf-8")
+
+    (DIST / "collane").mkdir()
+    pagina_collana = env.get_template("collana.html")
+    for c in collane:
+        html = pagina_collana.render(pagina="collana", radice="../", collana=c, **contesto)
+        (DIST / "collane" / f"{c['slug']}.html").write_text(html, encoding="utf-8")
 
     robots = "User-agent: *\nDisallow: /\n" if contesto["staging"] else "User-agent: *\nAllow: /\n"
     (DIST / "robots.txt").write_text(robots, encoding="utf-8")
     (DIST / ".nojekyll").write_text("", encoding="utf-8")
-    print(f"Sito generato in {DIST} ({n} pagine e {len(libri)} schede di libri)")
+    print(f"Sito generato in {DIST} ({n} pagine, {len(libri)} schede di libri, {len(collane)} collane)")
 
 
 if __name__ == "__main__":

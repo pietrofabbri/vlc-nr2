@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% from "macro.html" import scheda_breve %}
+{% set c = collana %}
+{% block titolo %}Collana {{ c.nome }} · Volta la carta edizioni{% endblock %}
+{% block descrizione %}{{ c.descrizione[:150] }}{% endblock %}
+{% block contenuto %}
+<div class="pagina pagina--larga">
+  <nav class="briciole" aria-label="Percorso"><a href="../libri.html">Libri</a> › Collane</nav>
+  <div class="testa-collana" style="--h: {{ c.tinta }}">
+    <p class="occhiello">Collana</p>
+    <h1>{{ c.nome }}</h1>
+    {% if c.direzione %}<p class="sezione__intro">Direzione: {{ c.direzione }}</p>{% endif %}
+    <p class="testa-collana__testo">{{ c.descrizione }}</p>
+    <p class="libro__meta">{{ c.libri|length }} {{ "libro" if c.libri|length == 1 else "libri" }}</p>
+  </div>
+  <ul class="libri">
+  {% for b in c.libri %}{{ scheda_breve(b, radice) }}{% endfor %}
+  </ul>
+  <div class="avviso" style="margin-top:2.5rem">
+    <p>Ha un lavoro adatto a questa collana? <a class="collegamento" href="../pubblica.html">Pubblichi con noi</a></p>
+  </div>
+  <h2 style="margin-top:2.5rem">Le altre collane</h2>
+  <ul class="collane">
+  {% for o in dati.collane if o.slug != c.slug %}
+    <li style="--h: {{ o.tinta }}"><a class="collegamento" href="{{ o.slug }}.html">{{ o.nome }}</a><p>{{ o.libri|length }} libri</p></li>
+  {% endfor %}
+  </ul>
+</div>
+{% endblock %}

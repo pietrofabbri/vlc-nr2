@@ -1,30 +1,78 @@
 {% extends "base.html" %}
-{% from "macro.html" import copertina, chiedi %}
+{% from "macro.html" import copertina, scheda_breve, pronta %}
 {% set b = libro %}
-{% block titolo %}{{ b.titolo }}{% if b.autori %} · {{ b.autori }}{% endif %} · Volta la carta{% endblock %}
+{% block titolo %}{{ b.titolo }}{% if b.autori %} · {{ b.autori }}{% endif %} · Volta la carta edizioni{% endblock %}
 {% block descrizione %}{{ b.titolo }}{% if b.autori %}, di {{ b.autori }}{% endif %}{% if b.collana %}, collana {{ b.collana.nome }}{% endif %}. ISBN {{ b.isbn }}. Volta la carta edizioni, Ferrara.{% endblock %}
 {% block head %}
 <script type="application/ld+json">{{ {"@context": "https://schema.org", "@type": "Book", "name": b.titolo, "isbn": b.isbn, "author": b.autori, "datePublished": b.anno, "publisher": {"@type": "Organization", "name": "Volta la carta"}, "offers": ({"@type": "Offer", "price": b.prezzo, "priceCurrency": "EUR"} if b.prezzo else none)}|tojson }}</script>
 {% endblock %}
 {% block contenuto %}
 <div class="pagina pagina--larga">
-  <p class="occhiello"><a href="../libri.html">Libri</a>{% if b.collana %} · <a href="../libri.html?collana={{ b.collana.slug }}">{{ b.collana.nome }}</a>{% endif %}</p>
+  <nav class="briciole" aria-label="Percorso"><a href="../libri.html">Libri</a>{% if b.collana %} › <a href="../collane/{{ b.collana.slug }}.html">{{ b.collana.nome }}</a>{% endif %}</nav>
   <div class="scheda">
     {{ copertina(b) }}
     <div>
-      <h1>{{ b.titolo }}</h1>
+      <h1 class="scheda__titolo">{{ b.titolo }}</h1>
       {% if b.autori %}<p class="sezione__intro">{{ b.autori }}</p>{% endif %}
       <dl class="dati">
-        {% if b.collana %}<dt>Collana</dt><dd>{{ b.collana.nome }}{% if b.collana.direzione %}, direzione {{ b.collana.direzione }}{% endif %}</dd>{% endif %}
+        {% if b.collana %}<dt>Collana</dt><dd><a href="../collane/{{ b.collana.slug }}.html">{{ b.collana.nome }}</a>{% if b.collana.direzione %}, direzione {{ b.collana.direzione }}{% endif %}</dd>{% endif %}
         {% if b.anno %}<dt>Anno</dt><dd>{{ b.anno }}</dd>{% endif %}
         <dt>ISBN</dt><dd>{{ b.isbn }}</dd>
-        {% if b.prezzo %}<dt>Prezzo</dt><dd><strong>{{ b.prezzo|euro }}</strong></dd>{% endif %}
+        {% if b.prezzo %}<dt>Prezzo</dt><dd><strong class="scheda__prezzo">{{ b.prezzo|euro }}</strong></dd>{% endif %}
       </dl>
-      {% if b.gratuito %}<p>Questo libro è disponibile anche in PDF gratuito: lo chieda per email.</p>{% endif %}
-      <div>{{ chiedi(b) }}</div>
-      <p class="libro__meta" style="margin-top:1rem">Le rispondiamo con il totale, i tempi e come pagare. Ritiro gratuito in sede a Ferrara, oppure spedizione. <a href="../come-ordinare.html">Come ordinare</a></p>
-      {% if b.collana %}<p class="avviso">{{ b.collana.descrizione }}</p>{% endif %}
+      {% if b.gratuito %}<p class="avviso">Questo libro è disponibile anche in <strong>PDF gratuito</strong>: lo chieda con il modulo qui sotto.</p>{% endif %}
+
+      <form class="richiesta" data-richiesta data-v="{{ cifrato }}"
+            data-oggetto="Richiesta libro: {{ b.titolo }} (ISBN {{ b.isbn }})"
+            data-intro="Buongiorno, vorrei ricevere il libro «{{ b.titolo }}»{% if b.autori %} di {{ b.autori }}{% endif %}, ISBN {{ b.isbn }}."
+            {% if b.prezzo %}data-prezzo="{{ b.prezzo }}"{% endif %}>
+        <h2 class="richiesta__h">Richieda il libro</h2>
+        <p class="richiesta__aiuto">Non c'è un carrello: compiliamo insieme l'email, lei la invia e le rispondiamo con totale, tempi e come pagare.</p>
+        <div class="richiesta__campi">
+          <label>Copie
+            <input type="number" name="copie" value="1" min="1" max="200" inputmode="numeric" data-etichetta="Copie" required>
+          </label>
+          {% if b.prezzo %}<p class="richiesta__stima">Prezzo: <strong data-stima>{{ b.prezzo|euro }}</strong></p>{% endif %}
+        </div>
+        <fieldset class="richiesta__scelta">
+          <legend>Come lo riceve</legend>
+          <label><input type="radio" name="consegna" value="Ritiro in sede a Ferrara" data-etichetta="Consegna" checked> Ritiro gratuito in sede, via Voltapaletto 25</label>
+          <label><input type="radio" name="consegna" value="Spedizione" data-etichetta="Consegna"> Spedizione</label>
+        </fieldset>
+        <div class="richiesta__campi">
+          <label>Nome e cognome
+            <input type="text" name="nome" autocomplete="name" data-etichetta="Nome" required>
+          </label>
+          <div data-se="consegna=Spedizione" hidden>
+            <label>Indirizzo di spedizione
+              <textarea name="indirizzo" rows="3" autocomplete="street-address" placeholder="Via, numero, CAP, città, Paese" data-etichetta="Indirizzo di spedizione" data-obbligatorio="si"></textarea>
+            </label>
+          </div>
+          <label class="richiesta__largo"><span>Note <span class="facoltativo">(facoltative)</span></span>
+            <textarea name="note" rows="2" placeholder="Per esempio: mi serve la fattura, sono una biblioteca…" data-etichetta="Note"></textarea>
+          </label>
+        </div>
+        <button type="submit" class="bottone">Prepari l'email</button>
+        {{ pronta() }}
+      </form>
+
+      <section class="cita">
+        <h2 class="richiesta__h">Come citarlo</h2>
+        <p id="cita" class="cita__testo">{% if b.autori %}{{ b.autori }}{% if b.anno %} ({{ b.anno }}){% endif %}. {% endif %}<em>{{ b.titolo }}</em>. Ferrara: Volta la carta{% if not b.autori and b.anno %}, {{ b.anno }}{% endif %}. ISBN {{ b.isbn }}.</p>
+        <button type="button" class="bottone bottone--piccolo bottone--chiaro" data-copia-da="cita">Copia la citazione</button>
+      </section>
     </div>
   </div>
+
+  {% if altri %}
+  <section class="altri">
+    <h2>Nella stessa collana</h2>
+    <ul class="libri">
+    {% for x in altri %}{{ scheda_breve(x, radice) }}{% endfor %}
+    </ul>
+    <p style="margin-top:1rem"><a class="collegamento" href="../collane/{{ b.collana.slug }}.html">Tutta la collana {{ b.collana.nome }}</a></p>
+  </section>
+  {% endif %}
 </div>
 {% endblock %}
+{% block script %}<script src="../assets/js/richiesta.js" defer></script>{% endblock %}

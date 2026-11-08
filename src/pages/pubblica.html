@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "macro.html" import pronta %}
 {% block titolo %}Pubblichi con Volta la carta · per docenti, dottori di ricerca e dipartimenti{% endblock %}
 {% block descrizione %}Dalla tesi di dottorato al libro con ISBN, dalle dispense al manuale adottato, atti di convegno e collane per i dipartimenti. Cura, stampa e rilegatura nello stesso laboratorio a Ferrara.{% endblock %}
 {% block contenuto %}
@@ -16,7 +17,7 @@
 
   <h2>Come si lavora</h2>
   <ol class="passi">
-    <li><strong>Ci scrive</strong> con titolo, indice, una breve presentazione e il numero di pagine previsto.</li>
+    <li><strong>Ci scrive</strong> con <a href="#proposta">il modulo in fondo alla pagina</a>: titolo, tipo di lavoro, pagine previste; poi allega indice e presentazione.</li>
     <li><strong>Valutiamo la proposta.</strong> Per le collane la legge il comitato scientifico.</li>
     <li><strong>Le mandiamo un preventivo</strong> con tempi, numero di copie e condizioni.</li>
     <li><strong>Curiamo il testo e la copertina</strong> e le mandiamo le bozze da approvare.</li>
@@ -25,12 +26,40 @@
 
   <h2>Le collane</h2>
   <ul>
-  {% for c in dati.collane %}<li><a href="libri.html?collana={{ c.slug }}">{{ c.nome }}</a>{% if c.direzione %}, direzione {{ c.direzione }}{% endif %}</li>{% endfor %}
+  {% for c in dati.collane %}<li><a href="collane/{{ c.slug }}.html">{{ c.nome }}</a>{% if c.direzione %}, direzione {{ c.direzione }}{% endif %}</li>{% endfor %}
   </ul>
 
-  <div class="avviso">
-    <p><strong>Ci scriva la sua proposta.</strong> Le rispondiamo entro pochi giorni lavorativi.</p>
-    <p>{{ rivela("mail", "Scriva una proposta", "Proposta di pubblicazione", "Buongiorno,\nvorrei proporre una pubblicazione.\n\nTitolo provvisorio:\nTipo (tesi di dottorato, manuale, atti, altro):\nPagine previste:\nCollana di interesse, se c'è:\n\nAllego indice e breve presentazione.\n\nGrazie", "bottone") }}</p>
-  </div>
+  <form class="richiesta" id="proposta" data-richiesta data-v="{{ cifrato }}" data-oggetto="Proposta di pubblicazione"
+        data-intro="Buongiorno, vorrei proporre una pubblicazione a Volta la carta edizioni."
+        data-chiusura="Allego indice e una breve presentazione.">
+    <h2 class="richiesta__h">Ci proponga il suo lavoro</h2>
+    <p class="richiesta__aiuto">Compili i campi: prepariamo l'email, lei la invia allegando indice e presentazione.</p>
+    <div class="richiesta__campi">
+      <label>Nome e cognome<input type="text" name="nome" autocomplete="name" data-etichetta="Nome" required></label>
+      <label>Ruolo
+        <select name="ruolo" data-etichetta="Ruolo" required>
+          <option value="">Scelga</option><option>Docente</option><option>Ricercatore o ricercatrice</option><option>Dottore o dottoressa di ricerca</option><option>Dipartimento o centro di ricerca</option><option>Altro</option>
+        </select>
+      </label>
+      <label>Università o ente<input type="text" name="ente" autocomplete="organization" data-etichetta="Università o ente"></label>
+      <label>Tipo di pubblicazione
+        <select name="tipo" data-etichetta="Tipo" required>
+          <option value="">Scelga</option><option>Tesi di dottorato</option><option>Manuale o dispense per un corso</option><option>Atti di convegno</option><option>Monografia</option><option>Collana per un dipartimento</option><option>Altro</option>
+        </select>
+      </label>
+      <label class="richiesta__largo">Titolo provvisorio<input type="text" name="titolo" data-etichetta="Titolo provvisorio" required></label>
+      <label>Pagine previste<input type="number" name="pagine" min="1" inputmode="numeric" data-etichetta="Pagine previste"></label>
+      <label>Collana di interesse
+        <select name="collana" data-etichetta="Collana di interesse">
+          <option value="">Non so ancora</option>
+          {% for c in dati.collane %}<option>{{ c.nome }}</option>{% endfor %}
+        </select>
+      </label>
+      <label class="richiesta__largo"><span>Due righe sul lavoro <span class="facoltativo">(facoltative)</span></span><textarea name="presentazione" rows="3" data-etichetta="Presentazione"></textarea></label>
+    </div>
+    <button type="submit" class="bottone">Prepari l'email</button>
+    {{ pronta() }}
+  </form>
 </div>
 {% endblock %}
+{% block script %}<script src="assets/js/richiesta.js" defer></script>{% endblock %}
