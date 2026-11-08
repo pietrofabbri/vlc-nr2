@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% from "macro.html" import scheda_breve %}
+{% block titolo %}Volta la carta edizioni · casa editrice universitaria a Ferrara{% endblock %}
+{% block descrizione %}Casa editrice di Ferrara: {{ dati.libri|length }} libri in {{ dati.collane|length }} collane di pedagogia, scienze dell'educazione e manualistica universitaria. Libri curati, stampati e rilegati nella nostra legatoria.{% endblock %}
+{% block contenuto %}
+<section class="apertura">
+  <p class="occhiello">Casa editrice · Ferrara · dal 2013</p>
+  <h1>Libri di ricerca, curati e rilegati a Ferrara</h1>
+  <p class="apertura__sotto">Pedagogia, scienze dell'educazione e manuali universitari, con comitati scientifici e autori in Italia, Spagna e America Latina. Ogni libro è curato, stampato e rilegato nella nostra legatoria.</p>
+  <div class="azioni">
+    <a class="bottone" href="libri.html">Sfogli i libri</a>
+    <a class="bottone bottone--chiaro" href="pubblica.html">Pubblichi con noi</a>
+  </div>
+  <ul class="fatti">
+    <li>{{ dati.libri|length }} libri con ISBN</li>
+    <li>{{ dati.collane|length }} collane</li>
+    <li>Premio della Società italiana di pedagogia 2022</li>
+  </ul>
+</section>
+
+<section class="sezione">
+  <h2>Ultime uscite</h2>
+  <ul class="libri">
+  {% for b in dati.libri[:8] %}{{ scheda_breve(b, radice) }}{% endfor %}
+  </ul>
+  <p style="margin-top:1.5rem"><a class="collegamento" href="libri.html">Tutti i {{ dati.libri|length }} libri</a></p>
+</section>
+
+<section class="sezione">
+  <h2>Le collane</h2>
+  <ul class="collane">
+  {% for c in dati.collane %}
+    <li style="--h: {{ c.tinta }}"><a class="collegamento" href="libri.html?collana={{ c.slug }}">{{ c.nome }}</a>{% if c.direzione %}<p>Direzione: {{ c.direzione }} · {{ c.libri|length }} libri</p>{% else %}<p>{{ c.libri|length }} libri</p>{% endif %}</li>
+  {% endfor %}
+  </ul>
+</section>
+
+<section class="sezione">
+  <h2>Per chi scrive</h2>
+  <div class="aree">
+    <div class="area"><h3>Dottori di ricerca</h3><p>La tesi di dottorato diventa un libro con ISBN, curato e stampato in poche copie o in tiratura.</p></div>
+    <div class="area"><h3>Docenti</h3><p>Dispense, lezioni e slide diventano un manuale che gli studenti adottano.</p></div>
+    <div class="area"><h3>Dipartimenti</h3><p>Atti di convegno e collane, con impaginazione uniforme e copie pronte per l'evento.</p></div>
+  </div>
+  <p style="margin-top:1.5rem"><a class="collegamento" href="pubblica.html">Come pubblicare con noi</a></p>
+</section>
+{% endblock %}
