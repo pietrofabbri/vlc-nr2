@@ -1,0 +1,3 @@
+Copertine vere dei libri.
+Un file per libro, chiamato con l'ISBN senza trattini: 9788890837012.jpg (anche .png o .webp).
+Meglio in verticale, circa 600 pixel di larghezza. Se il file non c'è, il sito disegna la copertina da solo.

@@ -74,6 +74,8 @@ def carica_libri(collane: list[dict]) -> list[dict]:
                 "prezzo": float(r["prezzo_eur"]) if r["prezzo_eur"].strip() else None,
                 "collana": collana,
                 "gratuito": "download gratuito" in r["note"],
+                "foto": next((f"copertine/{isbn}{e}" for e in (".jpg", ".png", ".webp")
+                              if (SRC / "assets" / "copertine" / f"{isbn}{e}").exists()), ""),
             })
     libri.sort(key=lambda b: (b["anno"] or "0000", b["titolo"]), reverse=True)
     return libri

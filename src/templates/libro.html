@@ -10,7 +10,7 @@
 <div class="pagina pagina--larga">
   <nav class="briciole" aria-label="Percorso"><a href="../libri.html">Libri</a>{% if b.collana %} › <a href="../collane/{{ b.collana.slug }}.html">{{ b.collana.nome }}</a>{% endif %}</nav>
   <div class="scheda">
-    {{ copertina(b) }}
+    {{ copertina(b, "", "../") }}
     <div>
       <h1 class="scheda__titolo">{{ b.titolo }}</h1>
       {% if b.autori %}<p class="sezione__intro">{{ b.autori }}</p>{% endif %}

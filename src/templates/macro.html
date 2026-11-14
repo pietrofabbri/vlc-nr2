@@ -1,14 +1,18 @@
-{% macro copertina(b, href="") %}
+{% macro copertina(b, href="", radice_copertine="") %}
 {% set t = b.collana.tinta if b.collana else 30 %}
+{% if b.foto %}
+<a class="libro__copertina libro__copertina--foto" href="{{ href }}" aria-hidden="true" tabindex="-1"><img src="{{ radice_copertine }}assets/{{ b.foto }}" alt="" loading="lazy" width="300" height="450"></a>
+{% else %}
 <a class="libro__copertina" style="--h: {{ t }}" href="{{ href }}" aria-hidden="true" tabindex="-1">
   <span>{{ b.titolo }}</span>
   <small>{{ b.collana.nome if b.collana else "Volta la carta" }}</small>
 </a>
+{% endif %}
 {% endmacro %}
 
 {% macro scheda_breve(b, radice) %}
 <li class="libro" data-collana="{{ b.collana.slug if b.collana else '' }}" data-anno="{{ b.anno or 0 }}" data-prezzo="{{ b.prezzo or 9999 }}" data-titolo="{{ b.titolo|lower }}" data-testo="{{ (b.titolo ~ ' ' ~ b.autori ~ ' ' ~ b.isbn ~ ' ' ~ (b.collana.nome if b.collana else ''))|lower }}">
-  {{ copertina(b, radice ~ "libri/" ~ b.isbn ~ ".html") }}
+  {{ copertina(b, radice ~ "libri/" ~ b.isbn ~ ".html", radice) }}
   <p class="libro__titolo"><a href="{{ radice }}libri/{{ b.isbn }}.html">{{ b.titolo }}</a></p>
   {% if b.autori %}<p class="libro__autori">{{ b.autori }}</p>{% endif %}
   <p class="libro__meta">{% if b.anno %}{{ b.anno }} · {% endif %}{% if b.prezzo %}<span class="libro__prezzo">{{ b.prezzo|euro }}</span>{% endif %}</p>

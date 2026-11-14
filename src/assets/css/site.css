@@ -210,3 +210,7 @@ p { margin: 0 0 1em; }
   .richiesta__campi { grid-template-columns: 1fr; }
   .cerca-home { flex-direction: column; }
 }
+
+/* Copertine vere, quando ci sono (assets/copertine/<isbn>.jpg) */
+.libro__copertina--foto { padding: 0; background: var(--surface); }
+.libro__copertina--foto img { width: 100%; height: 100%; object-fit: cover; }
