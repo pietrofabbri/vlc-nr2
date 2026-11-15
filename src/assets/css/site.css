@@ -140,7 +140,7 @@ p { margin: 0 0 1em; }
 
 /* Piede */
 .piede { border-top: 1px solid var(--line); margin-top: 2rem; font-size: .92rem; color: var(--muted); }
-.piede__in { max-width: var(--largo); margin: 0 auto; padding: 2.5rem 20px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+.piede__in { max-width: var(--largo); margin: 0 auto; padding: 2.5rem 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; }
 .piede__marchio { font-family: var(--display); font-size: 1.4rem; color: var(--ink); margin-bottom: .4rem; }
 .piede nav { display: flex; flex-direction: column; gap: .3rem; }
 
@@ -214,3 +214,51 @@ p { margin: 0 0 1em; }
 /* Copertine vere, quando ci sono (assets/copertine/<isbn>.jpg) */
 .libro__copertina--foto { padding: 0; background: var(--surface); }
 .libro__copertina--foto img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Selettore dei siti di Volta la carta (megamenu.html, siti.js) */
+.testata { position: relative; }
+.siti { border-bottom: 1px solid var(--line); background: var(--surface); }
+.siti__apri {
+  display: flex; align-items: center; gap: .5rem; max-width: var(--largo); width: 100%; margin: 0 auto; padding: .45rem 20px;
+  font: inherit; font-size: .82rem; letter-spacing: .02em; color: var(--muted); background: none; border: 0; cursor: pointer; text-align: left;
+}
+.siti__apri:hover, .siti__apri[aria-expanded="true"] { color: var(--ink); }
+.siti__icona { width: .9rem; height: .9rem; display: inline-grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.siti__icona, .siti__icona::before, .siti__icona::after { position: relative; }
+.siti__icona { background:
+  linear-gradient(currentColor 0 0) 0 0 / 40% 40% no-repeat, linear-gradient(currentColor 0 0) 100% 0 / 40% 40% no-repeat,
+  linear-gradient(currentColor 0 0) 0 100% / 40% 40% no-repeat, linear-gradient(currentColor 0 0) 100% 100% / 40% 40% no-repeat; }
+.siti__apri::after { content: ""; width: .45rem; height: .45rem; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translateY(-2px); margin-left: .15rem; transition: transform .15s; }
+.siti__apri[aria-expanded="true"]::after { transform: rotate(-135deg) translateY(-1px); }
+.siti__pannello {
+  position: absolute; left: 0; right: 0; z-index: 20; background: var(--paper);
+  border-bottom: 1px solid var(--line); box-shadow: 0 18px 40px -20px rgba(0,0,0,.35);
+  max-height: calc(100vh - 3rem); overflow-y: auto;
+}
+.siti__in { max-width: var(--largo); margin: 0 auto; padding: 1.5rem 20px 1.25rem; }
+.siti__colonne { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.sito { border: 1px solid var(--line); background: var(--surface); padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .35rem; }
+.sito--questo { border-color: var(--accent); box-shadow: inset 0 3px 0 var(--accent); }
+.sito__tipo { margin: 0; font-size: .75rem; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+.sito__etichetta { font-size: .68rem; letter-spacing: .04em; text-transform: none; font-weight: 600; padding: .05rem .5rem; border-radius: 999px; background: var(--accent); color: var(--on-accent); }
+.sito__etichetta--arrivo { background: transparent; color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); }
+.sito__nome { font-size: 1.45rem; margin: 0; }
+.sito__nome a { text-decoration: none; }
+.sito__nome a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.sito__testo { margin: 0; color: var(--muted); font-size: .93rem; }
+.sito__per { margin: 0; font-size: .82rem; color: var(--muted); }
+.sito__voci { list-style: none; padding: 0; margin: .5rem 0 0; display: flex; flex-wrap: wrap; gap: .35rem .9rem; font-size: .92rem; }
+.sito__voci a { color: var(--accent); font-weight: 600; text-underline-offset: .2em; }
+.siti__generali { display: flex; flex-wrap: wrap; gap: .4rem 1.25rem; align-items: center; margin-top: 1rem; padding-top: .9rem; border-top: 1px solid var(--line); font-size: .88rem; color: var(--muted); }
+.siti__generali span { margin-right: auto; }
+.siti__generali a { color: var(--ink); }
+.piede__titolo { color: var(--ink); font-weight: 650; margin: 0 0 .2rem; }
+
+@media (max-width: 960px) {
+  .piede__in { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .siti__colonne { grid-template-columns: 1fr; }
+  .siti__generali span { margin-right: 0; width: 100%; }
+  .piede__in { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,28 @@
+{# Selettore dei siti di Volta la carta. I dati stanno in src/data/siti.json: per spostare un sito su un dominio nuovo basta cambiare «url». #}
+{% macro href(sito, url) %}{% if sito.questo %}{{ radice }}{{ url }}{% else %}{{ url }}{% endif %}{% endmacro %}
+<div class="siti">
+  <button type="button" class="siti__apri" aria-expanded="false" aria-controls="siti-pannello">
+    <span class="siti__icona" aria-hidden="true"></span>I siti di Volta la carta
+  </button>
+  <div class="siti__pannello" id="siti-pannello" hidden>
+    <div class="siti__in">
+      <div class="siti__colonne">
+      {% for s in dati.siti.siti %}
+        <section class="sito{% if s.questo %} sito--questo{% endif %}" aria-labelledby="sito-{{ s.slug }}">
+          <p class="sito__tipo">{{ s.nome }}{% if s.questo %} <span class="sito__etichetta">sei qui</span>{% elif s.stato != "attivo" %} <span class="sito__etichetta sito__etichetta--arrivo">nuovo sito {{ s.stato }}</span>{% endif %}</p>
+          <h2 class="sito__nome" id="sito-{{ s.slug }}"><a href="{{ href(s, "index.html" if s.questo else s.url) }}"{% if not s.questo %} rel="noopener"{% endif %}>{{ s.marchio }}</a></h2>
+          <p class="sito__testo">{{ s.descrizione }}</p>
+          <p class="sito__per">Per: {{ s.per }}</p>
+          <ul class="sito__voci">
+          {% for v in s.voci %}<li><a href="{{ href(s, v.url) }}">{{ v.nome }}</a></li>{% endfor %}
+          </ul>
+        </section>
+      {% endfor %}
+      </div>
+      <nav class="siti__generali" aria-label="Volta la carta">
+        <span>Volta la carta · {{ dati.bottega.indirizzo }}, Ferrara · dal {{ dati.bottega.dal }}</span>
+        {% for g in dati.siti.generali %}<a href="{{ radice }}{{ g.url }}">{{ g.nome }}</a>{% endfor %}
+      </nav>
+    </div>
+  </div>
+</div>

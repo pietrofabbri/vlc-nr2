@@ -1,0 +1,49 @@
+{
+ "nota": "I siti di Volta la carta. Quando un sito passa al suo dominio, si cambia solo «url» qui. «questo»: true indica il sito di questa repo (link relativi). «stato»: attivo | in arrivo.",
+ "siti": [
+  {
+   "slug": "edizioni",
+   "nome": "Casa editrice",
+   "marchio": "Volta la carta edizioni",
+   "per": "Lettori, docenti, dottori di ricerca, dipartimenti, librerie",
+   "descrizione": "Libri di pedagogia, scienze dell'educazione e manuali universitari. Pubblicare con noi.",
+   "url": "",
+   "questo": true,
+   "stato": "attivo",
+   "voci": [
+    {"nome": "Tutti i libri", "url": "libri.html"},
+    {"nome": "Le collane", "url": "index.html#collane"},
+    {"nome": "Pubblichi con noi", "url": "pubblica.html"},
+    {"nome": "Come ordinare", "url": "come-ordinare.html"}
+   ]
+  },
+  {
+   "slug": "tesi",
+   "nome": "Tesi di laurea",
+   "marchio": "rilegaretesi.it",
+   "per": "Laureandi e laureate",
+   "descrizione": "Stampa e rilegatura della tesi: carichi il PDF, scegli la copertina, vedi prezzo e data di spedizione.",
+   "url": "https://rilegaretesi.it/",
+   "stato": "attivo",
+   "voci": [
+    {"nome": "Rilega la tua tesi", "url": "https://rilegaretesi.it/"}
+   ]
+  },
+  {
+   "slug": "bottega",
+   "nome": "Legatoria e bottega",
+   "marchio": "Volta la carta, via Voltapaletto",
+   "per": "Privati, enti, aziende, turisti, rivenditori",
+   "descrizione": "Lavori su misura e di pregio, album, quaderni in carta fatta a mano, ricordi di Ferrara, copisteria.",
+   "url": "https://voltalacarta.it/",
+   "stato": "in arrivo",
+   "voci": [
+    {"nome": "Il sito attuale", "url": "https://voltalacarta.it/"}
+   ]
+  }
+ ],
+ "generali": [
+  {"nome": "Chi siamo", "url": "chi-siamo.html"},
+  {"nome": "Contatti e orari", "url": "contatti.html"}
+ ]
+}

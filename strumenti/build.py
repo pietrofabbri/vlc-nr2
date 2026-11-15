@@ -87,13 +87,13 @@ def main() -> None:
     a = ap.parse_args()
 
     leggi = lambda n: json.loads((SRC / "data" / n).read_text(encoding="utf-8"))  # noqa: E731
-    bottega, collane = leggi("bottega.json"), leggi("collane.json")
+    bottega, collane, siti = leggi("bottega.json"), leggi("collane.json"), leggi("siti.json")
     for i, c in enumerate(collane):  # una tinta per collana, per le copertine disegnate
         c["tinta"] = [165, 15, 215, 35, 340, 275, 190, 95, 0, 45][i % 10]
     libri = carica_libri(collane)
     for c in collane:
         c["libri"] = [b for b in libri if b["collana"] is c]
-    dati = {"bottega": bottega, "collane": collane, "libri": libri,
+    dati = {"bottega": bottega, "collane": collane, "siti": siti, "libri": libri,
             "anni": sorted({b["anno"] for b in libri if b["anno"]})}
 
     if DIST.exists():

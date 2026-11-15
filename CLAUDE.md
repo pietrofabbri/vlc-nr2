@@ -15,6 +15,7 @@ Sito di Volta la carta edizioni: solo la casa editrice. Legatoria, negozio e alt
 - Telefono ed email mai in chiaro: si usa `rivela(...)` nei template.
 - Fuori dall'Unione europea dazi e tasse sono a carico di chi riceve: va detto dove si parla di spedizioni.
 - Niente pagine su legatoria, negozio o tesi: vanno sui loro siti.
+- Selettore «I siti di Volta la carta» in cima a ogni pagina: dati in `src/data/siti.json`. Quando un sito passa al suo dominio si cambia solo `url` lì.
 - Catalogo dei libri in `src/data/libri.csv` (copia dal second brain), collane in `src/data/collane.json`.
 - Anteprima: `python3 strumenti/build.py`, poi apri `dist/index.html` con un server locale.
 

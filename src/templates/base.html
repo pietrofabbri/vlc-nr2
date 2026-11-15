@@ -14,6 +14,7 @@
 <a class="salta" href="#contenuto">Vai al contenuto</a>
 {% if staging %}<div class="staging"><p>Versione di prova del nuovo sito di Volta la carta edizioni. Il sito attuale non è cambiato.</p></div>{% endif %}
 <header class="testata">
+  {% include "megamenu.html" %}
   <div class="testata__in">
     <a class="marchio" href="{{ radice }}index.html">
       <span class="marchio__nome">Volta la carta</span>
@@ -41,6 +42,10 @@
     <div>
       <p>Telefono: {{ rivela("tel") }}<br>Email: {{ rivela("mail") }}<br>Orari: {{ dati.bottega.orari }}</p>
     </div>
+    <nav aria-label="I siti di Volta la carta">
+      <p class="piede__titolo">I siti di Volta la carta</p>
+      {% for s in dati.siti.siti %}<a href="{% if s.questo %}{{ radice }}index.html{% else %}{{ s.url }}{% endif %}">{{ s.marchio }}</a>{% endfor %}
+    </nav>
     <nav aria-label="Informazioni">
       <a href="{{ radice }}come-ordinare.html">Come ordinare</a>
       <a href="{{ radice }}pubblica.html">Pubblichi con noi</a>
@@ -49,6 +54,7 @@
   </div>
 </footer>
 <script src="{{ radice }}assets/js/contatti.js" defer></script>
+<script src="{{ radice }}assets/js/siti.js" defer></script>
 {% block script %}{% endblock %}
 </body>
 </html>

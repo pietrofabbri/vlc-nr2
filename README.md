@@ -28,6 +28,7 @@ Nuovo sito della casa editrice Volta la carta, via Voltapaletto 25, Ferrara. Sol
 | Scheda di ogni libro | `src/templates/libro.html`, una pagina per ISBN in `dist/libri/` |
 | Catalogo dei libri | `src/data/libri.csv` |
 | Collane e dati della sede | `src/data/*.json` |
+| Selettore dei siti di Volta la carta (indirizzi da cambiare quando arrivano i domini) | `src/data/siti.json` |
 | Generatore | `strumenti/build.py` |
 
 ## Come si lavora
