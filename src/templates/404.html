@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block titolo %}Pagina non trovata · Volta la carta edizioni{% endblock %}
+{% block descrizione %}La pagina cercata non esiste più o ha cambiato indirizzo.{% endblock %}
+{% block contenuto %}
+<div class="pagina">
+  <p class="occhiello">Errore 404</p>
+  <h1>Questa pagina non c'è</h1>
+  <p class="sezione__intro">Forse l'indirizzo è cambiato con il nuovo sito. Cerchi il libro nel catalogo:</p>
+  <form class="cerca-home" action="{{ radice }}libri.html" role="search">
+    <label for="q" class="visivo-nascosto">Cerchi un libro</label>
+    <input type="search" id="q" name="q" placeholder="Titolo, autore o ISBN">
+    <button type="submit" class="bottone">Cerca</button>
+  </form>
+  <p><a class="collegamento" href="{{ radice }}index.html">Vai alla pagina iniziale</a></p>
+</div>
+{% endblock %}

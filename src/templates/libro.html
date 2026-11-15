@@ -22,7 +22,7 @@
       </dl>
       {% if b.gratuito %}<p class="avviso">Questo libro è disponibile anche in <strong>PDF gratuito</strong>: lo chieda con il modulo qui sotto.</p>{% endif %}
 
-      <form class="richiesta" data-richiesta data-v="{{ cifrato }}"
+      <form class="richiesta" id="richiesta" data-richiesta data-v="{{ cifrato }}"
             data-oggetto="Richiesta libro: {{ b.titolo }} (ISBN {{ b.isbn }})"
             data-intro="Buongiorno, vorrei ricevere il libro «{{ b.titolo }}»{% if b.autori %} di {{ b.autori }}{% endif %}, ISBN {{ b.isbn }}."
             {% if b.prezzo %}data-prezzo="{{ b.prezzo }}"{% endif %}>
@@ -30,7 +30,11 @@
         <p class="richiesta__aiuto">Non c'è un carrello: compiliamo insieme l'email, lei la invia e le rispondiamo con totale, tempi e come pagare.</p>
         <div class="richiesta__campi">
           <label>Copie
-            <input type="number" name="copie" value="1" min="1" max="200" inputmode="numeric" data-etichetta="Copie" required>
+            <span class="contatore">
+              <button type="button" data-passo="-1" aria-label="Una copia in meno">−</button>
+              <input type="number" name="copie" value="1" min="1" max="200" inputmode="numeric" data-etichetta="Copie" required>
+              <button type="button" data-passo="1" aria-label="Una copia in più">+</button>
+            </span>
           </label>
           {% if b.prezzo %}<p class="richiesta__stima">Prezzo: <strong data-stima>{{ b.prezzo|euro }}</strong></p>{% endif %}
         </div>
@@ -73,6 +77,10 @@
     <p style="margin-top:1rem"><a class="collegamento" href="../collane/{{ b.collana.slug }}.html">Tutta la collana {{ b.collana.nome }}</a></p>
   </section>
   {% endif %}
+</div>
+<div class="barra-richiesta" hidden>
+  <p><strong>{{ b.titolo|truncate(40) }}</strong>{% if b.prezzo %}<span>{{ b.prezzo|euro }}</span>{% endif %}</p>
+  <a class="bottone bottone--piccolo" href="#richiesta">Richieda il libro</a>
 </div>
 {% endblock %}
 {% block script %}<script src="../assets/js/richiesta.js" defer></script>{% endblock %}

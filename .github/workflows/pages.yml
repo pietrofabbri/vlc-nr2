@@ -36,6 +36,8 @@ jobs:
           cp node_modules/@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2 "$D/hanken.woff2"
           ls -la "$D"
       - run: python strumenti/build.py
+        env:
+          SITO_BASE: /${{ github.event.repository.name }}/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

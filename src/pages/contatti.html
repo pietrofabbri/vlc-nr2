@@ -1,14 +1,29 @@
 {% extends "base.html" %}
-{% block titolo %}Contatti · Volta la carta, via Voltapaletto 25, Ferrara{% endblock %}
-{% block descrizione %}Volta la carta, via Voltapaletto 25, 44121 Ferrara. Orari: {{ dati.bottega.orari }}.{% endblock %}
+{% block titolo %}Contatti · Volta la carta edizioni, via Voltapaletto 25, Ferrara{% endblock %}
+{% block descrizione %}Volta la carta edizioni, via Voltapaletto 25, 44121 Ferrara. Orari: {{ dati.bottega.orari }}. Proposte di pubblicazione, ordini di libri, librerie e biblioteche.{% endblock %}
 {% block contenuto %}
-<div class="pagina">
+{% set indirizzo = dati.bottega.indirizzo ~ ", " ~ dati.bottega.cap_citta %}
+<div class="pagina pagina--media">
   <h1>Contatti</h1>
-  <h2>Sede</h2>
-  <p>{{ dati.bottega.indirizzo }}, {{ dati.bottega.cap_citta }}<br>Orari: {{ dati.bottega.orari }}</p>
-  <h2>Email</h2>
-  <p>Proposte di pubblicazione, ordini di libri, librerie e biblioteche: {{ rivela("mail") }}</p>
-  <h2>Telefono</h2>
-  <p>{{ rivela("tel") }}, negli orari della sede.</p>
+  <p class="sezione__intro">Per proposte di pubblicazione, ordini di libri, librerie e biblioteche.</p>
+  <div class="contatti">
+    <section class="contatto">
+      <h2>Scriva</h2>
+      <p>La strada più comoda: le rispondiamo per email con tutti i dettagli.</p>
+      <p>{{ rivela("mail", "Mostra l'email", "", "", "bottone") }}</p>
+      <p class="contatto__piccolo">Per un libro o una proposta c'è un modulo che prepara l'email: <a href="libri.html">libri</a> · <a href="pubblica.html#proposta">proposte</a>.</p>
+    </section>
+    <section class="contatto">
+      <h2>Chiami</h2>
+      <p>Negli orari della sede.</p>
+      <p>{{ rivela("tel", "Mostra il numero", "", "", "bottone bottone--chiaro") }}</p>
+    </section>
+    <section class="contatto">
+      <h2>Venga in sede</h2>
+      <p>{{ indirizzo }}<br>Nel centro storico, vicino all'università.</p>
+      <p><a class="bottone bottone--chiaro" href="https://www.google.com/maps/search/?api=1&query={{ ('Volta la carta, ' ~ indirizzo)|url }}" target="_blank" rel="noopener">Apri nelle mappe</a></p>
+      <p class="contatto__piccolo">Orari: {{ dati.bottega.orari }}. I libri ordinati si ritirano qui gratuitamente.</p>
+    </section>
+  </div>
 </div>
 {% endblock %}

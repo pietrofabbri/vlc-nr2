@@ -22,7 +22,7 @@
     </a>
     <nav class="menu" aria-label="Principale">
       <a href="{{ radice }}libri.html"{% if pagina in ('libri', 'libro') %} aria-current="page"{% endif %}>Libri</a>
-      <a href="{{ radice }}pubblica.html"{% if pagina == 'pubblica' %} aria-current="page"{% endif %}>Pubblica con noi</a>
+      <a href="{{ radice }}pubblica.html"{% if pagina == 'pubblica' %} aria-current="page"{% endif %}>Pubblichi con noi</a>
       <a href="{{ radice }}chi-siamo.html"{% if pagina == 'chi-siamo' %} aria-current="page"{% endif %}>Chi siamo</a>
       <a href="{{ radice }}contatti.html"{% if pagina == 'contatti' %} aria-current="page"{% endif %}>Contatti</a>
     </nav>
@@ -53,8 +53,10 @@
     </nav>
   </div>
 </footer>
+<a href="#contenuto" class="torna-su" hidden aria-label="Torna su">↑</a>
 <script src="{{ radice }}assets/js/contatti.js" defer></script>
 <script src="{{ radice }}assets/js/siti.js" defer></script>
+<script src="{{ radice }}assets/js/comodita.js" defer></script>
 {% block script %}{% endblock %}
 </body>
 </html>

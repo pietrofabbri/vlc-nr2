@@ -15,6 +15,7 @@ import argparse
 import base64
 import csv
 import json
+import os
 import shutil
 from pathlib import Path
 from urllib.parse import quote
@@ -129,6 +130,11 @@ def main() -> None:
     for c in collane:
         html = pagina_collana.render(pagina="collana", radice="../", collana=c, **contesto)
         (DIST / "collane" / f"{c['slug']}.html").write_text(html, encoding="utf-8")
+
+    # Pagina 404: GitHub Pages la mostra a qualunque profondità, quindi usa percorsi assoluti.
+    base = os.environ.get("SITO_BASE", "/")
+    html = env.get_template("404.html").render(pagina="404", radice=base, **contesto)
+    (DIST / "404.html").write_text(html, encoding="utf-8")
 
     robots = "User-agent: *\nDisallow: /\n" if contesto["staging"] else "User-agent: *\nAllow: /\n"
     (DIST / "robots.txt").write_text(robots, encoding="utf-8")

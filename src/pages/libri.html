@@ -8,6 +8,7 @@
   <h1>I libri</h1>
   <p class="sezione__intro">Apra la scheda di un libro e lo richieda: prepariamo insieme l'email e le rispondiamo con totale, tempi e come pagare. <a class="collegamento" href="come-ordinare.html">Come ordinare</a></p>
 
+  <div class="barra-catalogo">
   <form class="filtri" role="search" onsubmit="return false">
     <label class="filtri__cerca">Cerca
       <input type="search" id="cerca" placeholder="Titolo, autore, ISBN o collana" autocomplete="off" aria-keyshortcuts="/">
@@ -23,6 +24,7 @@
   <div class="schede-collane" role="group" aria-label="Collane">
     <button type="button" class="chip" data-collana="" aria-pressed="true">Tutte</button>
     {% for c in dati.collane %}<button type="button" class="chip" data-collana="{{ c.slug }}" aria-pressed="false" style="--h: {{ c.tinta }}">{{ c.nome }} <span>{{ c.libri|length }}</span></button>{% endfor %}
+  </div>
   </div>
   {% for c in dati.collane %}
   <p class="avviso descrizione-collana" data-per="{{ c.slug }}" hidden><strong>{{ c.nome }}</strong>{% if c.direzione %}, direzione {{ c.direzione }}{% endif %}. {{ c.descrizione }} <a class="collegamento" href="collane/{{ c.slug }}.html">Pagina della collana</a></p>
